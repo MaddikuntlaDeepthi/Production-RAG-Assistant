@@ -1,0 +1,21 @@
+.env
+venv/
+__pycache__/
+*.pyc
+# Project data and backups
+data/
+backup_archive/
+
+# Evaluation output
+evaluation/results/
+
+# Python environment and cache
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+# Secrets
+.env
+.env.*
+!.env.example

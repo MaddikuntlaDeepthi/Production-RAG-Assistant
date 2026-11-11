@@ -1,0 +1,27 @@
+services:
+  backend:
+    image: production-rag-app:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rag_backend
+    command: uvicorn backend.main:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+
+  frontend:
+    image: production-rag-app:latest
+    container_name: rag_frontend
+    command: streamlit run app.py --server.address 0.0.0.0 --server.port 8501
+    ports:
+      - "8501:8501"
+    environment:
+      RAG_API_URL: http://backend:8000
+    depends_on:
+      - backend
+    restart: unless-stopped
